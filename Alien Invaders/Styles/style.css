@@ -1,0 +1,9 @@
+﻿@import url(reset.css);
+.wrapper {
+  display: flex;
+  justify-content: center; }
+  .wrapper #canvas {
+    margin-top: 20px;
+    border: 1px solid #000; }
+
+/*# sourceMappingURL=style.css.map */
