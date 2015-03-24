@@ -9,7 +9,7 @@ var player = new Ship(315, 500, shipImg, 10);
 //Enemies;
 var enemyImg = new Image();
 enemyImg.src = "Images/enemy.png";
-var waveSpeed = 0.5;
+var waveSpeed = 0.1;
 var waveY = 20;
 var waveX = 100;
 var rowPos = 1;
@@ -49,32 +49,41 @@ var enemies =
     new Enemy(waveX, 8, waveY + 150, enemyImg, waveSpeed)
 ];
 
+//Bullets;
+var greenBullet = new Image();
+greenBullet.src = "Images/bullet.png";
+var allBullets = [];
+
+//Input;
 var input = new Input();
 listener(input);
 
 function render(ctx) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     player.draw(ctx);
+    //player.boundingBox.draw(ctx);
     enemies.forEach(function (enemy) {
         enemy.draw(ctx);
+        //enemy.boundingBox.draw(ctx);
+    });
+    allBullets.forEach(function (bullet) {
+        bullet.draw(ctx);
+        //bullet.boundingBox.draw(ctx);
     });
 }
 
 function tick() {
-    //to add sw space
     if (input.d) {
         player.moveRight = true;
 
     } else {
         player.moveRight = false;
-
     }
     if (input.a) {
         player.moveLeft = true;
 
     } else {
         player.moveLeft = false;
-
     }
     if (input.s) {
         player.moveUp = true;
@@ -88,13 +97,34 @@ function tick() {
 
     } else {
         player.moveDown = false;
-
+    }
+    if (input.space) {
+        var bullet = new Bullet(player.x + 18, player.y - 12, greenBullet, true);
+        allBullets.push(bullet);
     }
 
     player.update();
     enemies.forEach(function (enemy) {
         enemy.update();
     });
+    allBullets.map(function (bullet) {
+        bullet.update();
+        //Remove bullets gone outside of the canvas;
+        if (bullet.y > 560 || bullet.y < 0) {
+            //console.log("f");
+            allBullets.remove(bullet);
+        }
+        //Hit;
+        enemies.map(function (enemy) {
+            if (enemy.boundingBox.intersects(bullet.boundingBox)) {
+                //console.log("hit");
+                enemies.remove(enemy);
+                allBullets.remove(bullet);
+            }
+        });
+
+    });
+
 
 }
 
