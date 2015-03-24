@@ -4,7 +4,7 @@ var ctx = c.getContext("2d");
 //Player;
 var shipImg = new Image();
 shipImg.src = "Images/ship.png";
-var player = new Ship(315, 500, shipImg, 10);
+var player = new Ship(315, 500, shipImg, 5, 20);
 
 //Enemies;
 var enemyImg = new Image();
@@ -53,6 +53,7 @@ var enemies =
 var greenBullet = new Image();
 greenBullet.src = "Images/bullet.png";
 var allBullets = [];
+var readyToShoot = 0;
 
 //Input;
 var input = new Input();
@@ -73,6 +74,7 @@ function render(ctx) {
 }
 
 function tick() {
+    //Move directions;
     if (input.d) {
         player.moveRight = true;
 
@@ -98,11 +100,19 @@ function tick() {
     } else {
         player.moveDown = false;
     }
+    //Fire;
     if (input.space) {
-        var bullet = new Bullet(player.x + 18, player.y - 12, greenBullet, true);
-        allBullets.push(bullet);
+        //Delay Fire rate;
+        if (readyToShoot % player.fireRate === 0) {
+            var bullet = new Bullet(player.x + 18, player.y - 12, greenBullet, true);
+            allBullets.push(bullet);
+        }
+        readyToShoot++;
+    } else {
+        readyToShoot = 0;
     }
 
+    //Update objs;
     player.update();
     enemies.forEach(function (enemy) {
         enemy.update();
@@ -122,9 +132,7 @@ function tick() {
                 allBullets.remove(bullet);
             }
         });
-
     });
-
 
 }
 
@@ -132,7 +140,6 @@ function update() {
     tick();
     render(ctx);
     requestAnimationFrame(update);
-
 }
 
 update();

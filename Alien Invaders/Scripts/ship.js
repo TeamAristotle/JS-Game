@@ -1,9 +1,10 @@
 ﻿var Ship = (function () {
-    function Ship(x, y, image, speed) {
+    function Ship(x, y, image, speed, fireRate) {
         this.x = x;
         this.y = y;
         this.image = image;
         this.speed = speed;
+        this.fireRate = fireRate;
         this.hp = 1;
         this.width = 40;
         this.height = 26;
