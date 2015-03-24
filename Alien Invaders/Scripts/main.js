@@ -1,6 +1,9 @@
 ﻿var c = document.getElementById("canvas");
 var ctx = c.getContext("2d");
 
+//Game is running;
+var running = true;
+
 //Player;
 var shipImg = new Image();
 shipImg.src = "Images/ship.png";
@@ -9,51 +12,57 @@ var player = new Ship(315, 500, shipImg, 5, 20);
 //Enemies;
 var enemyImg = new Image();
 enemyImg.src = "Images/enemy.png";
-var waveSpeed = 0.1;
-var waveY = 20;
-var waveX = 100;
-var rowPos = 1;
-var enemies =
+var waveSpeed = 0.1,
+    waveY = 20,
+    waveX = 100,
+    rowPos = 1,
+    fireRate = 500,
+    enemies =
 [
-    new Enemy(waveX, 1, waveY, enemyImg, waveSpeed),
-    new Enemy(waveX, 2, waveY, enemyImg, waveSpeed),
-    new Enemy(waveX, 3, waveY, enemyImg, waveSpeed),
-    new Enemy(waveX, 4, waveY, enemyImg, waveSpeed),
-    new Enemy(waveX, 5, waveY, enemyImg, waveSpeed),
-    new Enemy(waveX, 6, waveY, enemyImg, waveSpeed),
-    new Enemy(waveX, 7, waveY, enemyImg, waveSpeed),
-    new Enemy(waveX, 8, waveY, enemyImg, waveSpeed),
-    new Enemy(waveX, 1, waveY + 50, enemyImg, waveSpeed),
-    new Enemy(waveX, 2, waveY + 50, enemyImg, waveSpeed),
-    new Enemy(waveX, 3, waveY + 50, enemyImg, waveSpeed),
-    new Enemy(waveX, 4, waveY + 50, enemyImg, waveSpeed),
-    new Enemy(waveX, 5, waveY + 50, enemyImg, waveSpeed),
-    new Enemy(waveX, 6, waveY + 50, enemyImg, waveSpeed),
-    new Enemy(waveX, 7, waveY + 50, enemyImg, waveSpeed),
-    new Enemy(waveX, 8, waveY + 50, enemyImg, waveSpeed),
-    new Enemy(waveX, 1, waveY + 100, enemyImg, waveSpeed),
-    new Enemy(waveX, 2, waveY + 100, enemyImg, waveSpeed),
-    new Enemy(waveX, 3, waveY + 100, enemyImg, waveSpeed),
-    new Enemy(waveX, 4, waveY + 100, enemyImg, waveSpeed),
-    new Enemy(waveX, 5, waveY + 100, enemyImg, waveSpeed),
-    new Enemy(waveX, 6, waveY + 100, enemyImg, waveSpeed),
-    new Enemy(waveX, 7, waveY + 100, enemyImg, waveSpeed),
-    new Enemy(waveX, 8, waveY + 100, enemyImg, waveSpeed),
-    new Enemy(waveX, 1, waveY + 150, enemyImg, waveSpeed),
-    new Enemy(waveX, 2, waveY + 150, enemyImg, waveSpeed),
-    new Enemy(waveX, 3, waveY + 150, enemyImg, waveSpeed),
-    new Enemy(waveX, 4, waveY + 150, enemyImg, waveSpeed),
-    new Enemy(waveX, 5, waveY + 150, enemyImg, waveSpeed),
-    new Enemy(waveX, 6, waveY + 150, enemyImg, waveSpeed),
-    new Enemy(waveX, 7, waveY + 150, enemyImg, waveSpeed),
-    new Enemy(waveX, 8, waveY + 150, enemyImg, waveSpeed)
+    new Enemy(waveX, 1, waveY, enemyImg, waveSpeed, fireRate),
+    new Enemy(waveX, 2, waveY, enemyImg, waveSpeed, fireRate),
+    new Enemy(waveX, 3, waveY, enemyImg, waveSpeed, fireRate),
+    new Enemy(waveX, 4, waveY, enemyImg, waveSpeed, fireRate),
+    new Enemy(waveX, 5, waveY, enemyImg, waveSpeed, fireRate),
+    new Enemy(waveX, 6, waveY, enemyImg, waveSpeed, fireRate),
+    new Enemy(waveX, 7, waveY, enemyImg, waveSpeed, fireRate),
+    new Enemy(waveX, 8, waveY, enemyImg, waveSpeed, fireRate),
+    new Enemy(waveX, 1, waveY + 50, enemyImg, waveSpeed, fireRate),
+    new Enemy(waveX, 2, waveY + 50, enemyImg, waveSpeed, fireRate),
+    new Enemy(waveX, 3, waveY + 50, enemyImg, waveSpeed, fireRate),
+    new Enemy(waveX, 4, waveY + 50, enemyImg, waveSpeed, fireRate),
+    new Enemy(waveX, 5, waveY + 50, enemyImg, waveSpeed, fireRate),
+    new Enemy(waveX, 6, waveY + 50, enemyImg, waveSpeed, fireRate),
+    new Enemy(waveX, 7, waveY + 50, enemyImg, waveSpeed, fireRate),
+    new Enemy(waveX, 8, waveY + 50, enemyImg, waveSpeed, fireRate),
+    new Enemy(waveX, 1, waveY + 100, enemyImg, waveSpeed, fireRate),
+    new Enemy(waveX, 2, waveY + 100, enemyImg, waveSpeed, fireRate),
+    new Enemy(waveX, 3, waveY + 100, enemyImg, waveSpeed, fireRate),
+    new Enemy(waveX, 4, waveY + 100, enemyImg, waveSpeed, fireRate),
+    new Enemy(waveX, 5, waveY + 100, enemyImg, waveSpeed, fireRate),
+    new Enemy(waveX, 6, waveY + 100, enemyImg, waveSpeed, fireRate),
+    new Enemy(waveX, 7, waveY + 100, enemyImg, waveSpeed, fireRate),
+    new Enemy(waveX, 8, waveY + 100, enemyImg, waveSpeed, fireRate),
+    new Enemy(waveX, 1, waveY + 150, enemyImg, waveSpeed, fireRate),
+    new Enemy(waveX, 2, waveY + 150, enemyImg, waveSpeed, fireRate),
+    new Enemy(waveX, 3, waveY + 150, enemyImg, waveSpeed, fireRate),
+    new Enemy(waveX, 4, waveY + 150, enemyImg, waveSpeed, fireRate),
+    new Enemy(waveX, 5, waveY + 150, enemyImg, waveSpeed, fireRate),
+    new Enemy(waveX, 6, waveY + 150, enemyImg, waveSpeed, fireRate),
+    new Enemy(waveX, 7, waveY + 150, enemyImg, waveSpeed, fireRate),
+    new Enemy(waveX, 8, waveY + 150, enemyImg, waveSpeed, fireRate)
 ];
 
 //Bullets;
 var greenBullet = new Image();
 greenBullet.src = "Images/bullet.png";
-var allBullets = [];
-var readyToShoot = 0;
+var redBullets = new Image();
+redBullets.src = "Images/bullet_enemy.png";
+var playerBullets = [],
+    readyToShoot = 0,
+    enemyBullets = [],
+    playerBulletSpeed = 1,
+    enemyBulletSpeed = 1;
 
 //Input;
 var input = new Input();
@@ -67,7 +76,11 @@ function render(ctx) {
         enemy.draw(ctx);
         //enemy.boundingBox.draw(ctx);
     });
-    allBullets.forEach(function (bullet) {
+    playerBullets.forEach(function (bullet) {
+        bullet.draw(ctx);
+        //bullet.boundingBox.draw(ctx);
+    });
+    enemyBullets.forEach(function (bullet) {
         bullet.draw(ctx);
         //bullet.boundingBox.draw(ctx);
     });
@@ -104,8 +117,8 @@ function tick() {
     if (input.space) {
         //Delay Fire rate;
         if (readyToShoot % player.fireRate === 0) {
-            var bullet = new Bullet(player.x + 18, player.y - 12, greenBullet, true);
-            allBullets.push(bullet);
+            var bullet = new Bullet(player.x + 18, player.y - 12, greenBullet, playerBulletSpeed, true);
+            playerBullets.push(bullet);
         }
         readyToShoot++;
     } else {
@@ -116,30 +129,60 @@ function tick() {
     player.update();
     enemies.forEach(function (enemy) {
         enemy.update();
+        //Enemy fire;
+        var fire = Math.floor((Math.random() * enemy.fireRate));
+        //console.log(fire);
+        if (fire === 0) {
+            //console.log("fire");
+            var bullet = new Bullet(enemy.x + 18, enemy.y + 12, redBullets, enemyBulletSpeed, false);
+            enemyBullets.push(bullet);
+        }
     });
-    allBullets.map(function (bullet) {
+    //Player bullets;
+    playerBullets.map(function (bullet) {
         bullet.update();
         //Remove bullets gone outside of the canvas;
         if (bullet.y > 560 || bullet.y < 0) {
             //console.log("f");
-            allBullets.remove(bullet);
+            playerBullets.remove(bullet);
         }
         //Hit;
         enemies.map(function (enemy) {
             if (enemy.boundingBox.intersects(bullet.boundingBox)) {
                 //console.log("hit");
                 enemies.remove(enemy);
-                allBullets.remove(bullet);
+                playerBullets.remove(bullet);
             }
         });
     });
-
+    //Enemy bullets;
+    enemyBullets.map(function (bullet) {
+        bullet.update();
+        //Remove bullets gone outside of the canvas;
+        if (bullet.y > 560 || bullet.y < 0) {
+            //console.log("f");
+            enemyBullets.remove(bullet);
+        }
+        //Hit;
+        if (player.boundingBox.intersects(bullet.boundingBox)) {
+            //console.log("hit");
+            enemyBullets.remove(bullet);
+            player.removeHp();
+            //Remove HP and stop game;
+            if (player.hp === 0) {
+                console.log("Game Over");
+                running = false;
+            }
+        }
+    });
 }
 
 function update() {
     tick();
     render(ctx);
-    requestAnimationFrame(update);
+    if (running) {
+        requestAnimationFrame(update);
+    }
 }
 
 update();

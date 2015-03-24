@@ -1,13 +1,15 @@
-﻿var goRight = false;
-var goDown = true;
+﻿//Global var so the entire row can move together;
+var goRight = false,
+    goDown = true;
 
 var Enemy = (function () {
-    function Enemy(x, rowPos, y, image, speed) {
+    function Enemy(x, rowPos, y, image, speed, fireRate) {
         this.rowPos = rowPos;
         this.x = x + rowPos * 50;
         this.y = y;
         this.image = image;
         this.speed = speed;
+        this.fireRate = fireRate;
         this.hp = 1;
         this.width = 38;
         this.height = 28;

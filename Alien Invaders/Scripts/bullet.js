@@ -1,4 +1,4 @@
-﻿var Bullet = (function() {
+﻿var Bullet = (function () {
     function Bullet(x, y, image, speed, directionUp) {
         this.x = x;
         this.y = y;
@@ -12,16 +12,19 @@
 
     Bullet.prototype.update = function () {
         if (this.goingUp) {
-            this.y += this.speed;
-            this.boundingBox.y += this.speed;
-        } else {
             this.y -= this.speed;
             this.boundingBox.y -= this.speed;
+        } else { //Going down;
+            this.y += this.speed;
+            this.boundingBox.y += this.speed;
+            //console.log("t");
         }
     };
 
     Bullet.prototype.draw = function (ctx) {
         ctx.drawImage(this.image, this.x, this.y);
     };
+
     return Bullet;
+
 })();

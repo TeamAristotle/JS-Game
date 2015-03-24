@@ -5,10 +5,14 @@
         this.image = image;
         this.speed = speed;
         this.fireRate = fireRate;
-        this.hp = 1;
+        this.hp = 3;
         this.width = 40;
         this.height = 26;
         this.boundingBox = new Rectangle(x, y, this.width, this.height);
+    }
+
+    Ship.prototype.removeHp = function () {
+        this.hp--;
     }
 
     Ship.prototype.update = function () {

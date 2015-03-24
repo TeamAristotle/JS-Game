@@ -2,13 +2,14 @@
 Basic file structure - done
 Player - done (with movement and restrictions)
 Invader - done (with movement and restrictions)
-Bullets
+Bullets - done
 Movement - done
-Colition
+Collision - done
+Game Over - done
 Levels
 Background
 Music
-Music on colition
+Music on Collision
 Score
 Play button
 Restart button
