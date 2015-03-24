@@ -42,7 +42,7 @@
     };
 
     Ship.prototype.draw = function (ctx) {
-        ctx.drawImage(image, this.x, this.y);
+        ctx.drawImage(this.image, this.x, this.y);
     };
     return Ship;
 })();
