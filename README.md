@@ -1,9 +1,9 @@
 # JS-Game
 Basic file structure - done
 Player - done (with movement and restrictions)
-Invader
+Invader - done (with movement and restrictions)
 Bullets
-Movement
+Movement - done
 Colition
 Levels
 Background
@@ -13,3 +13,8 @@ Score
 Play button
 Restart button
 HTML layout (style, css ect)
+Special effects
+Invaders life and player life
+Armour
+Rockets?
+Ammo?
