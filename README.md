@@ -1,6 +1,6 @@
 # JS-Game
 Basic file structure - done
-Player
+Player - done (with movement and restrictions)
 Invader
 Bullets
 Movement
