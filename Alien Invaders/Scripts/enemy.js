@@ -3,14 +3,14 @@ var goRight = false,
     goDown = true;
 
 var Enemy = (function () {
-    function Enemy(x, rowPos, y, image, speed, fireRate) {
+    function Enemy(x, rowPos, y, image, speed, fireRate, hp) {
         this.rowPos = rowPos;
         this.x = x + rowPos * 50;
         this.y = y;
         this.image = image;
         this.speed = speed;
         this.fireRate = fireRate;
-        this.hp = 1;
+        this.hp = hp;
         this.width = 38;
         this.height = 28;
         this.boundingBox = new Rectangle(x + rowPos * 50, y, this.width, this.height);
@@ -53,6 +53,10 @@ var Enemy = (function () {
             this.boundingBox.x = 5;
             goRight = true;
         }
+    };
+
+    Enemy.prototype.removeHp = function () {
+        this.hp--;
     };
 
     Enemy.prototype.draw = function (ctx) {

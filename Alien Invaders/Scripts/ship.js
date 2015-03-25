@@ -5,7 +5,7 @@
         this.image = image;
         this.speed = speed;
         this.fireRate = fireRate;
-        this.hp = 3;
+        this.hp = 5;
         this.width = 40;
         this.height = 26;
         this.boundingBox = new Rectangle(x, y, this.width, this.height);

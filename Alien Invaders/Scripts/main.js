@@ -3,56 +3,24 @@ var ctx = c.getContext("2d");
 
 //Game is running;
 var running = true;
+var multiplierSpeed = 1;
+var multiplierFire = 100;
 var score = 0;
 
 //Player;
 var shipImg = new Image();
-shipImg.src = "Images/ship.png";
-var player = new Ship(315, 500, shipImg, 5, 20);
+shipImg.src = "Images/ship5.png";
+var player = new Ship(315, 500, shipImg, 3, 20);
 
 //Enemies;
 var enemyImg = new Image();
-enemyImg.src = "Images/enemy.png";
 var waveSpeed = 0.1,
     waveY = 20,
     waveX = 100,
     rowPos = 1,
     fireRate = 500,
-    enemies =
-[
-    new Enemy(waveX, 1, waveY, enemyImg, waveSpeed, fireRate),
-    new Enemy(waveX, 2, waveY, enemyImg, waveSpeed, fireRate),
-    new Enemy(waveX, 3, waveY, enemyImg, waveSpeed, fireRate),
-    new Enemy(waveX, 4, waveY, enemyImg, waveSpeed, fireRate),
-    new Enemy(waveX, 5, waveY, enemyImg, waveSpeed, fireRate),
-    new Enemy(waveX, 6, waveY, enemyImg, waveSpeed, fireRate),
-    new Enemy(waveX, 7, waveY, enemyImg, waveSpeed, fireRate),
-    new Enemy(waveX, 8, waveY, enemyImg, waveSpeed, fireRate),
-    new Enemy(waveX, 1, waveY + 50, enemyImg, waveSpeed, fireRate),
-    new Enemy(waveX, 2, waveY + 50, enemyImg, waveSpeed, fireRate),
-    new Enemy(waveX, 3, waveY + 50, enemyImg, waveSpeed, fireRate),
-    new Enemy(waveX, 4, waveY + 50, enemyImg, waveSpeed, fireRate),
-    new Enemy(waveX, 5, waveY + 50, enemyImg, waveSpeed, fireRate),
-    new Enemy(waveX, 6, waveY + 50, enemyImg, waveSpeed, fireRate),
-    new Enemy(waveX, 7, waveY + 50, enemyImg, waveSpeed, fireRate),
-    new Enemy(waveX, 8, waveY + 50, enemyImg, waveSpeed, fireRate),
-    new Enemy(waveX, 1, waveY + 100, enemyImg, waveSpeed, fireRate),
-    new Enemy(waveX, 2, waveY + 100, enemyImg, waveSpeed, fireRate),
-    new Enemy(waveX, 3, waveY + 100, enemyImg, waveSpeed, fireRate),
-    new Enemy(waveX, 4, waveY + 100, enemyImg, waveSpeed, fireRate),
-    new Enemy(waveX, 5, waveY + 100, enemyImg, waveSpeed, fireRate),
-    new Enemy(waveX, 6, waveY + 100, enemyImg, waveSpeed, fireRate),
-    new Enemy(waveX, 7, waveY + 100, enemyImg, waveSpeed, fireRate),
-    new Enemy(waveX, 8, waveY + 100, enemyImg, waveSpeed, fireRate),
-    new Enemy(waveX, 1, waveY + 150, enemyImg, waveSpeed, fireRate),
-    new Enemy(waveX, 2, waveY + 150, enemyImg, waveSpeed, fireRate),
-    new Enemy(waveX, 3, waveY + 150, enemyImg, waveSpeed, fireRate),
-    new Enemy(waveX, 4, waveY + 150, enemyImg, waveSpeed, fireRate),
-    new Enemy(waveX, 5, waveY + 150, enemyImg, waveSpeed, fireRate),
-    new Enemy(waveX, 6, waveY + 150, enemyImg, waveSpeed, fireRate),
-    new Enemy(waveX, 7, waveY + 150, enemyImg, waveSpeed, fireRate),
-    new Enemy(waveX, 8, waveY + 150, enemyImg, waveSpeed, fireRate)
-];
+    hp = 1,
+    enemies = [];
 
 //Bullets;
 var greenBullet = new Image();
@@ -68,6 +36,56 @@ var playerBullets = [],
 //Input;
 var input = new Input();
 listener(input);
+
+//Generate new waves;
+function newWave() {
+    if (enemies.length === 0) {
+        //Enemies wave;
+        var rngImg = Math.floor((Math.random() * 4));
+        enemyImg.src = "Images/enemy" + rngImg + ".png";
+        enemies =
+        [
+            new Enemy(waveX, 1, waveY, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+            new Enemy(waveX, 2, waveY, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+            new Enemy(waveX, 3, waveY, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+            new Enemy(waveX, 4, waveY, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+            new Enemy(waveX, 5, waveY, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+            new Enemy(waveX, 6, waveY, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+            new Enemy(waveX, 7, waveY, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+            new Enemy(waveX, 8, waveY, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+            new Enemy(waveX, 1, waveY + 50, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+            new Enemy(waveX, 2, waveY + 50, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+            new Enemy(waveX, 3, waveY + 50, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+            new Enemy(waveX, 4, waveY + 50, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+            new Enemy(waveX, 5, waveY + 50, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+            new Enemy(waveX, 6, waveY + 50, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+            new Enemy(waveX, 7, waveY + 50, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+            new Enemy(waveX, 8, waveY + 50, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+            new Enemy(waveX, 1, waveY + 100, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+            new Enemy(waveX, 2, waveY + 100, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+            new Enemy(waveX, 3, waveY + 100, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+            new Enemy(waveX, 4, waveY + 100, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+            new Enemy(waveX, 5, waveY + 100, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+            new Enemy(waveX, 6, waveY + 100, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+            new Enemy(waveX, 7, waveY + 100, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+            new Enemy(waveX, 8, waveY + 100, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+            new Enemy(waveX, 1, waveY + 150, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+            new Enemy(waveX, 2, waveY + 150, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+            new Enemy(waveX, 3, waveY + 150, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+            new Enemy(waveX, 4, waveY + 150, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+            new Enemy(waveX, 5, waveY + 150, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+            new Enemy(waveX, 6, waveY + 150, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+            new Enemy(waveX, 7, waveY + 150, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+            new Enemy(waveX, 8, waveY + 150, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp)
+        ];
+        multiplierSpeed += 0.5;
+        multiplierFire += 100;
+        hp++;
+        if (multiplierFire >= 300) {
+            multiplierFire = 300;
+        }
+    }
+}
 
 function render(ctx) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -88,6 +106,9 @@ function render(ctx) {
 }
 
 function tick() {
+    //Generate new wave;
+    newWave();
+
     //Move directions;
     if (input.d) {
         player.moveRight = true;
@@ -151,7 +172,14 @@ function tick() {
         enemies.map(function (enemy) {
             if (enemy.boundingBox.intersects(bullet.boundingBox)) {
                 //console.log("hit");
-                enemies.remove(enemy);
+                if (enemy.hp === 0) {
+                    enemies.remove(enemy);
+                } else {
+                    enemy.removeHp();
+                    if (enemy.hp === 0) {
+                        enemies.remove(enemy);
+                    }
+                }
                 playerBullets.remove(bullet);
                 //increase score;
                 score += 100;
@@ -176,6 +204,8 @@ function tick() {
             if (player.hp === 0) {
                 console.log("Game Over");
                 running = false;
+            } else {
+                shipImg.src = "Images/ship" + player.hp + ".png";
             }
         }
     });
