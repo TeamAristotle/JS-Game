@@ -1,17 +1,33 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
     <title>Alien Invaders Game</title>
     <link type="text/css" href="Styles/style.css" rel="stylesheet" />
     <style type="text/css" media="screen">
-    canvas, img { display:block; margin:1em auto; border:1px solid black; }
-    canvas { background:url(Images/Backgrounds/background1.jpg) }
-  </style>
+        canvas,
+        img {
+            display: block;
+            margin: 1em auto;
+            border: 1px solid black;
+        }
+        
+        canvas {
+            background: url(Images/Backgrounds/background1.jpg)
+        }
+        .score {
+            position: relative;
+            right: 200px;
+        }
+    </style>
 </head>
+
 <body>
     <div class="wrapper">
         <canvas id="canvas" width="700" height="550">Your browser doesn't support Canvas
         </canvas>
+        <div class="score">SCORE: <span id="score">0</span>
+        </div>
     </div>
 
     <script src="Scripts/logic.js"></script>
@@ -20,4 +36,5 @@
     <script src="Scripts/enemy.js"></script>
     <script src="Scripts/main.js"></script>
 </body>
+
 </html>

@@ -1,8 +1,9 @@
-﻿var c = document.getElementById("canvas");
+var c = document.getElementById("canvas");
 var ctx = c.getContext("2d");
 
 //Game is running;
 var running = true;
+var score = 0;
 
 //Player;
 var shipImg = new Image();
@@ -152,6 +153,9 @@ function tick() {
                 //console.log("hit");
                 enemies.remove(enemy);
                 playerBullets.remove(bullet);
+                //increase score;
+                score += 100;
+                document.getElementById('score').innerHTML = score;
             }
         });
     });
