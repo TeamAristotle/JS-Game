@@ -6,17 +6,17 @@ Bullets - done
 Movement - done
 Collision - done
 Game Over - done
-Levels
+Levels - done
 Background - done
 Play and enemy images - done
-Music
-Music on Collision
-Score
+Music - done
+Music on Collision - done
+Score - done
 Play button
 Restart button
 HTML layout (style, css ect)
 Special effects
-Invaders life and player life
+Invaders life and player life - done
 Armour
 Rockets?
 Ammo?
