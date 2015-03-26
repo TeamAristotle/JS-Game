@@ -8,6 +8,7 @@ var multiplierFire = 100;
 var score = 0;
 var gameMusic = document.getElementById('backgroundMusic');
 gameMusic.play();
+//console.log(gameMusic);
 
 //Player;
 var shipImg = new Image();
@@ -22,6 +23,7 @@ var waveSpeed = 0.1,
     rowPos = 1,
     fireRate = 500,
     hp = 1,
+    waveReady = 1,
     enemies = [];
 
 //Bullets;
@@ -42,50 +44,54 @@ listener(input);
 //Generate new waves;
 function newWave() {
     if (enemies.length === 0) {
-        //Enemies wave;
-        var rngImg = Math.floor((Math.random() * 4));
-        enemyImg.src = "Images/enemy" + rngImg + ".png";
-        enemies =
-        [
-            new Enemy(waveX, 1, waveY, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
-            new Enemy(waveX, 2, waveY, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
-            new Enemy(waveX, 3, waveY, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
-            new Enemy(waveX, 4, waveY, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
-            new Enemy(waveX, 5, waveY, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
-            new Enemy(waveX, 6, waveY, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
-            new Enemy(waveX, 7, waveY, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
-            new Enemy(waveX, 8, waveY, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
-            new Enemy(waveX, 1, waveY + 50, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
-            new Enemy(waveX, 2, waveY + 50, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
-            new Enemy(waveX, 3, waveY + 50, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
-            new Enemy(waveX, 4, waveY + 50, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
-            new Enemy(waveX, 5, waveY + 50, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
-            new Enemy(waveX, 6, waveY + 50, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
-            new Enemy(waveX, 7, waveY + 50, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
-            new Enemy(waveX, 8, waveY + 50, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
-            new Enemy(waveX, 1, waveY + 100, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
-            new Enemy(waveX, 2, waveY + 100, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
-            new Enemy(waveX, 3, waveY + 100, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
-            new Enemy(waveX, 4, waveY + 100, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
-            new Enemy(waveX, 5, waveY + 100, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
-            new Enemy(waveX, 6, waveY + 100, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
-            new Enemy(waveX, 7, waveY + 100, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
-            new Enemy(waveX, 8, waveY + 100, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
-            new Enemy(waveX, 1, waveY + 150, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
-            new Enemy(waveX, 2, waveY + 150, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
-            new Enemy(waveX, 3, waveY + 150, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
-            new Enemy(waveX, 4, waveY + 150, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
-            new Enemy(waveX, 5, waveY + 150, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
-            new Enemy(waveX, 6, waveY + 150, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
-            new Enemy(waveX, 7, waveY + 150, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
-            new Enemy(waveX, 8, waveY + 150, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp)
-        ];
-        multiplierSpeed += 0.5;
-        multiplierFire += 100;
-        hp++;
-        if (multiplierFire >= 300) {
-            multiplierFire = 300;
+        if (waveReady % 100 === 0) {
+            waveReady = 1;
+            //Enemies wave;
+            var rngImg = Math.floor((Math.random() * 4));
+            enemyImg.src = "Images/enemy" + rngImg + ".png";
+            enemies =
+            [
+                new Enemy(waveX, 1, waveY, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+                new Enemy(waveX, 2, waveY, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+                new Enemy(waveX, 3, waveY, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+                new Enemy(waveX, 4, waveY, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+                new Enemy(waveX, 5, waveY, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+                new Enemy(waveX, 6, waveY, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+                new Enemy(waveX, 7, waveY, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+                new Enemy(waveX, 8, waveY, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+                new Enemy(waveX, 1, waveY + 50, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+                new Enemy(waveX, 2, waveY + 50, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+                new Enemy(waveX, 3, waveY + 50, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+                new Enemy(waveX, 4, waveY + 50, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+                new Enemy(waveX, 5, waveY + 50, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+                new Enemy(waveX, 6, waveY + 50, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+                new Enemy(waveX, 7, waveY + 50, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+                new Enemy(waveX, 8, waveY + 50, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+                new Enemy(waveX, 1, waveY + 100, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+                new Enemy(waveX, 2, waveY + 100, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+                new Enemy(waveX, 3, waveY + 100, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+                new Enemy(waveX, 4, waveY + 100, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+                new Enemy(waveX, 5, waveY + 100, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+                new Enemy(waveX, 6, waveY + 100, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+                new Enemy(waveX, 7, waveY + 100, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+                new Enemy(waveX, 8, waveY + 100, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+                new Enemy(waveX, 1, waveY + 150, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+                new Enemy(waveX, 2, waveY + 150, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+                new Enemy(waveX, 3, waveY + 150, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+                new Enemy(waveX, 4, waveY + 150, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+                new Enemy(waveX, 5, waveY + 150, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+                new Enemy(waveX, 6, waveY + 150, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+                new Enemy(waveX, 7, waveY + 150, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
+                new Enemy(waveX, 8, waveY + 150, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp)
+            ];
+            multiplierSpeed += 0.5;
+            multiplierFire += 100;
+            hp++;
+            if (multiplierFire >= 300) {
+                multiplierFire = 300;
+            }
         }
+        waveReady++;
     }
 }
 
@@ -110,7 +116,6 @@ function render(ctx) {
 function tick() {
     //Generate new wave;
     newWave();
-
     //Move directions;
     if (input.d) {
         player.moveRight = true;
@@ -172,7 +177,7 @@ function tick() {
             //console.log("f");
             playerBullets.remove(bullet);
         }
-        //Hit;
+        //Hit enemy;
         enemies.map(function (enemy) {
             if (enemy.boundingBox.intersects(bullet.boundingBox)) {
                 var enemyExplosion = document.getElementById('enemyExplosion');
@@ -190,6 +195,13 @@ function tick() {
                 //increase score;
                 score += 100;
                 document.getElementById('score').innerHTML = score;
+            }
+        });
+        //Hit enemy bullet;
+        enemyBullets.map(function (enemyBullet) {
+            if (enemyBullet.boundingBox.intersects(bullet.boundingBox)) {
+                playerBullets.remove(bullet);
+                enemyBullets.remove(enemyBullet);
             }
         });
     });
@@ -213,6 +225,8 @@ function tick() {
             if (player.hp === 0) {
                 console.log("Game Over");
                 running = false;
+                gameMusic.pause();
+                gameMusic.currentTime = 0;
             } else {
                 shipImg.src = "Images/ship" + player.hp + ".png";
             }
