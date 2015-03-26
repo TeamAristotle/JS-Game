@@ -6,6 +6,8 @@ var running = true;
 var multiplierSpeed = 1;
 var multiplierFire = 100;
 var score = 0;
+var gameMusic = document.getElementById('backgroundMusic');
+gameMusic.play();
 
 //Player;
 var shipImg = new Image();
@@ -141,6 +143,8 @@ function tick() {
         if (readyToShoot % player.fireRate === 0) {
             var bullet = new Bullet(player.x + 18, player.y - 12, greenBullet, playerBulletSpeed, true);
             playerBullets.push(bullet);
+            var shootSound = document.getElementById('shoot');
+            shootSound.play();
         }
         readyToShoot++;
     } else {
@@ -171,6 +175,8 @@ function tick() {
         //Hit;
         enemies.map(function (enemy) {
             if (enemy.boundingBox.intersects(bullet.boundingBox)) {
+                var enemyExplosion = document.getElementById('enemyExplosion');
+                enemyExplosion.play();
                 //console.log("hit");
                 if (enemy.hp === 0) {
                     enemies.remove(enemy);
@@ -197,9 +203,12 @@ function tick() {
         }
         //Hit;
         if (player.boundingBox.intersects(bullet.boundingBox)) {
+            var playerExplosion = document.getElementById('playerExplosion');
+            playerExplosion.play();
             //console.log("hit");
             enemyBullets.remove(bullet);
             player.removeHp();
+            document.getElementById('playerHealth').innerHTML = player.hp;
             //Remove HP and stop game;
             if (player.hp === 0) {
                 console.log("Game Over");

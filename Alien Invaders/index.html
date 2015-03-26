@@ -13,11 +13,16 @@
         }
         
         canvas {
-            /*background: url(Images/Backgrounds/background1.jpg)*/
+/*            background: url(Images/Backgrounds/background1.jpg)*/
         }
+        
         .score {
             position: relative;
             right: 200px;
+        }
+        .playerHealth {
+            position: relative;
+            right: 500px;
         }
     </style>
 </head>
@@ -26,9 +31,17 @@
     <div class="wrapper">
         <canvas id="canvas" width="700" height="550">Your browser doesn't support Canvas
         </canvas>
-        <div class="score">SCORE: <span id="score">0</span>
+        <div class="playerHealth">LIVES:
+            <span id="playerHealth">5</span>
+        </div>
+        <div class="score">SCORE:
+            <span id="score">0</span>
         </div>
     </div>
+    <audio src="Sounds/Laser_Shoot4.wav" id="shoot"></audio>
+    <audio src="Sounds/Explosion14.wav" id="enemyExplosion"></audio>
+    <audio src="Sounds/Explosion10.wav" id="playerExplosion"></audio>
+    <audio src="Sounds/backgroundBeat.mp3" id="backgroundMusic"></audio>
 
     <script src="Scripts/logic.js"></script>
     <script src="Scripts/bullet.js"></script>
