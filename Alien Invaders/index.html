@@ -11,37 +11,56 @@
             margin: 1em auto;
             border: 1px solid black;
         }
-        
-        canvas {
-/*            background: url(Images/Backgrounds/background1.jpg)*/
+
+        #restart {
+            display: none;
         }
-        
+
+        body {
+            background-image: url(Images/Backgrounds/planets.jpg);
+            background-repeat: no-repeat;
+            background-size: 100% auto;
+            transition: 2s all;
+        }
+
+        #canvas {
+            background: rgba(0, 0, 0, 0.7);
+        }
+
         .score {
             position: relative;
             right: 200px;
+            color: #fff;
         }
+
         .playerHealth {
             position: relative;
             right: 500px;
+            color: #fff;
         }
     </style>
 </head>
 
-<body>
-    <div class="wrapper">
-        <canvas id="canvas" width="700" height="550">Your browser doesn't support Canvas
-        </canvas>
-        <div class="playerHealth">LIVES:
-            <span id="playerHealth">5</span>
-        </div>
-        <div class="score">SCORE:
-            <span id="score">0</span>
-        </div>
+<body id="body">
+<div class="wrapper">
+    <input type="button" value="Start" onclick="start()" id="start"/>
+    <input type="button" value="Restart" onclick="restart()" id="restart"/>
+    <input type="button" value="Mute/Unmute" onclick="mute()" />
+    <canvas id="canvas" width="700" height="550">Your browser doesn't support Canvas
+    </canvas>
+    <div class="playerHealth">
+        LIVES:
+        <span id="playerHealth">5</span>
     </div>
+    <div class="score">
+        SCORE:
+        <span id="score">0</span>
+    </div>
+</div>
+
     <audio src="Sounds/Laser_Shoot4.wav" id="shoot"></audio>
     <audio src="Sounds/Explosion14.wav" id="enemyExplosion"></audio>
-<audio src="Sounds/Explosion10.wav" id="playerExplosion"></audio>
-
+    <audio src="Sounds/Explosion10.wav" id="playerExplosion"></audio>
     <audio src="Sounds/backgroundBeat.mp3" id="backgroundMusic" loop></audio>
 
     <script src="Scripts/logic.js"></script>

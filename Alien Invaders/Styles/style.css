@@ -1,6 +1,7 @@
 ﻿@import url(reset.css);
 .wrapper {
   display: flex;
+  flex-flow: row wrap;
   justify-content: center; }
   .wrapper #canvas {
     margin-top: 20px;

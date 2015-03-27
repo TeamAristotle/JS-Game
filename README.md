@@ -5,6 +5,7 @@ Invader - done (with movement and restrictions)
 Bullets - done
 Movement - done
 Collision - done
+Invaders life and player life - done
 Game Over - done
 Levels - done
 Background - done
@@ -12,12 +13,11 @@ Play and enemy images - done
 Music - done
 Music on Collision - done
 Score - done
-Play button
-Restart button
+Play button - done
+Restart button - done
+Mute button - done
 HTML layout (style, css ect)
-Special effects
-Invaders life and player life - done
-Armour
+Armour?
 Rockets?
 Ammo?
  

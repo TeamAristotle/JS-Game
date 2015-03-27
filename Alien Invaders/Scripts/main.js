@@ -2,12 +2,12 @@ var c = document.getElementById("canvas");
 var ctx = c.getContext("2d");
 
 //Game is running;
-var running = true;
-var multiplierSpeed = 1;
-var multiplierFire = 100;
-var score = 0;
-var gameMusic = document.getElementById('backgroundMusic');
-gameMusic.play();
+var running = true,
+    multiplierSpeed = 1,
+    multiplierFire = 100,
+    score = 0,
+    gameMusic = document.getElementById('backgroundMusic'),
+    musicPlaying = false;
 //console.log(gameMusic);
 
 //Player;
@@ -17,7 +17,7 @@ var player = new Ship(315, 500, shipImg, 3, 20);
 
 //Enemies;
 var enemyImg = new Image();
-var waveSpeed = 0.1,
+var waveSpeed = 0.2,
     waveY = 20,
     waveX = 100,
     rowPos = 1,
@@ -41,13 +41,57 @@ var playerBullets = [],
 var input = new Input();
 listener(input);
 
+function start() {
+    update();
+    gameMusic.currentTime = 0;
+    gameMusic.play();
+    musicPlaying = true;
+    document.getElementById('start').style.display = 'none';
+}
+
+function mute() {
+    if (musicPlaying) {
+        gameMusic.pause();
+        musicPlaying = false;
+    } else {
+        gameMusic.play();
+        musicPlaying = true;
+    }
+}
+
+function restart() {
+    if (!running) {
+        running = true;
+        multiplierSpeed = 1;
+        multiplierFire = 100;
+        score = 0;
+        document.getElementById('score').innerHTML = score;
+        shipImg.src = "Images/ship5.png";
+        player = new Ship(315, 500, shipImg, 3, 20);
+        document.getElementById('playerHealth').innerHTML = player.hp;
+        document.getElementById('restart').style.display = 'none';
+        playerBullets = [];
+        readyToShoot = 0;
+        enemyBullets = [];
+        hp = 1;
+        waveReady = 1;
+        waveSpeed = 0.2;
+        enemies = [];
+        start();
+    }
+}
+
 //Generate new waves;
 function newWave() {
     if (enemies.length === 0) {
         if (waveReady % 100 === 0) {
+            //Background;
+            var rngImg = Math.floor((Math.random() * 4));
+            document.getElementById('body').style.backgroundImage = 'url("Images/Backgrounds/background' + rngImg + '.jpg")';
+            console.log(rngImg);
             waveReady = 1;
             //Enemies wave;
-            var rngImg = Math.floor((Math.random() * 4));
+            rngImg = Math.floor((Math.random() * 4));
             enemyImg.src = "Images/enemy" + rngImg + ".png";
             enemies =
             [
@@ -149,7 +193,9 @@ function tick() {
             var bullet = new Bullet(player.x + 18, player.y - 12, greenBullet, playerBulletSpeed, true);
             playerBullets.push(bullet);
             var shootSound = document.getElementById('shoot');
-            shootSound.play();
+            if (musicPlaying) {
+                shootSound.play();
+            }
         }
         readyToShoot++;
     } else {
@@ -181,7 +227,9 @@ function tick() {
         enemies.map(function (enemy) {
             if (enemy.boundingBox.intersects(bullet.boundingBox)) {
                 var enemyExplosion = document.getElementById('enemyExplosion');
-                enemyExplosion.play();
+                if (musicPlaying) {
+                    enemyExplosion.play();
+                }
                 //console.log("hit");
                 if (enemy.hp === 0) {
                     enemies.remove(enemy);
@@ -216,7 +264,9 @@ function tick() {
         //Hit;
         if (player.boundingBox.intersects(bullet.boundingBox)) {
             var playerExplosion = document.getElementById('playerExplosion');
-            playerExplosion.play();
+            if (musicPlaying) {
+                playerExplosion.play();
+            }
             //console.log("hit");
             enemyBullets.remove(bullet);
             player.removeHp();
@@ -225,6 +275,8 @@ function tick() {
             if (player.hp === 0) {
                 console.log("Game Over");
                 running = false;
+                document.getElementById('restart').style.display = 'block';
+                document.getElementById('body').style.backgroundImage ='url("Images/Backgrounds/planets.jpg")';
                 gameMusic.pause();
                 gameMusic.currentTime = 0;
             } else {
@@ -241,5 +293,3 @@ function update() {
         requestAnimationFrame(update);
     }
 }
-
-update();
