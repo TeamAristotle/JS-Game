@@ -147,7 +147,6 @@ body {
             margin-top: 535px;
             //background: blue;
             width: 100%;
-            display: flex;
             flex-flow: row wrap;
             justify-content: center;
             text-transform: uppercase;
@@ -155,13 +154,8 @@ body {
             z-index: 1;
             display: none;
 
-            .playerHealth {
-                order: 1;
-                margin-right: 20px;
-            }
-
             .score-info {
-                order: 2;
+                margin-right: 20px;
             }
         }
     }

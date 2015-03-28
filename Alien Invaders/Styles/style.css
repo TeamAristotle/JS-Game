@@ -105,18 +105,14 @@ body {
       position: absolute;
       margin-top: 535px;
       width: 100%;
-      display: flex;
       flex-flow: row wrap;
       justify-content: center;
       text-transform: uppercase;
       color: #fff;
       z-index: 1;
       display: none; }
-      .wrapper .container aside .playerHealth {
-        order: 1;
-        margin-right: 20px; }
       .wrapper .container aside .score-info {
-        order: 2; }
+        margin-right: 20px; }
   .wrapper footer {
     margin-top: 20px;
     display: flex;

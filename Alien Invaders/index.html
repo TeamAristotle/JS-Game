@@ -35,9 +35,13 @@
                 </div>
             </div>
             <aside id="info">
-                <div class="playerHealth">
+                <div class="score-info">
                     lives:
                     <span id="playerHealth">5</span>
+                </div>
+                <div class="score-info">
+                    level:
+                    <span id="level">1</span>
                 </div>
                 <div class="score-info">
                     score:
@@ -52,7 +56,7 @@
         <footer>
             <h2>Team Aristotle. Some Rights &copy;</h2>
             <div>
-                <input type="button" value="Mute sound" onclick=" mute() " id="mute-btn"/>
+                <input type="button" value="Mute sound" onclick=" mute() " id="mute-btn" />
             </div>
         </footer>
     </div>
@@ -63,6 +67,7 @@
     <audio src="Sounds/backgroundBeat.mp3" id="backgroundMusic" loop></audio>
 
     <script src="Scripts/logic.js"></script>
+    <script src="Scripts/bonus.js"></script>
     <script src="Scripts/bullet.js"></script>
     <script src="Scripts/ship.js"></script>
     <script src="Scripts/enemy.js"></script>

@@ -73,7 +73,7 @@ var Rectangle = (function () {
         this.y = y;
         this.width = w;
         this.height = h;
-        this.color = "#ff0000";
+        this.color = "#0000ff";
     }
 
     /**
