@@ -16,11 +16,22 @@
                 <div id="start">
                     <div class="info-wrapper">
                         <div>Keys: </div>
-                        <div>Press 'a' to go left</div>
-                        <div>Press 'd' to go right</div>
-                        <div>Press 'w' to go up</div>
-                        <div>Press 's' to go down</div>
-                        <div>Press 'space' to go shoot</div>
+                        <ul>
+                            <li>Press <span>'a'</span> to go left</li>
+                            <li>Press <span>'d'</span> to go right</li>
+                            <li>Press <span>'w'</span> to go up</li>
+                            <li>Press <span>'s'</span> to go down</li>
+                            <li>Press <span>'space'</span> to go shoot</li>
+                        </ul>
+                    </div>
+                    <div class="info-wrapper">
+                        <div class="bonusses">Bonuses: </div>
+                        <ul>
+                            <li>Extra life</li>
+                            <li>Super fire speed</li>
+                            <li>Armor piercing bullets</li>
+                            <li>Second cannon</li>
+                        </ul>
                     </div>
                     <input type="button" value="Start playing" onclick=" start() " />
                 </div>
@@ -48,8 +59,7 @@
                     <span id="score">0</span>
                 </div>
             </aside>
-            <canvas id="canvas" width="700" height="550">
-                Your browser doesn't support Canvas
+            <canvas id="canvas" width="700" height="550">Your browser doesn't support Canvas
             </canvas>
 
         </section>

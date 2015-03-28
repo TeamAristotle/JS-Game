@@ -12,16 +12,21 @@ var running = true,
 
 gameMusic.play();
 
-//Player;
+//Player and bonuses;
 var shipImg = new Image();
 var rng = Math.floor(Math.random() * 3 + 1);
 shipImg.src = "Images/ship" + rng + ".png";
-var player = new Ship(315, 500, shipImg, 3, 20),
+var playerSpeed = 20,
+    defPlayerSpeed = 20;
+
+var player = new Ship(315, 500, shipImg, 3, playerSpeed),
     bonuses = [],
     bonusActive = false,
     fireBonusTimer = 1,
     bulletsActive = false,
-    superBulletsTimer = 1;
+    superBulletsTimer = 1,
+    bonusSpeed = false,
+    speedTimer = 1;
 
 //Enemies;
 var enemyImg = new Image();
@@ -43,6 +48,7 @@ var playerBullets = [],
     readyToShoot = 0,
     enemyBullets = [],
     playerBulletSpeed = 1,
+    defBulletSpeed = 1,
     enemyBulletSpeed = 1;
 
 //Input;
@@ -107,7 +113,12 @@ function restart() {
 //Generate new waves;
 function newWave() {
     if (enemies.length === 0) {
+        //Clear canvas of bullets;
+        enemyBullets = [];
+        playerBullets = [];
+        //Delay spawn;
         if (waveReady % 100 === 0) {
+            //Stats;
             level++;
             document.getElementById('level').innerHTML = level;
             //Background;
@@ -245,6 +256,13 @@ function tick() {
     if (input.space) {
         //Delay Fire rate;
         if (readyToShoot % player.fireRate === 0) {
+            if (bonusSpeed) {
+                playerBulletSpeed = defBulletSpeed * 2;
+                player.fireRate = defPlayerSpeed / 2;
+            } else {
+                playerBulletSpeed = defBulletSpeed;
+                player.fireRate = defPlayerSpeed;
+            }
             if (bonusActive) {
                 var bulletLeft = new Bullet(player.x + 5, player.y - 12, greenBullet, playerBulletSpeed, true);
                 var bulletRight = new Bullet(player.x + 31, player.y - 12, greenBullet, playerBulletSpeed, true);
@@ -275,6 +293,12 @@ function tick() {
         bulletsActive = false;
     } else {
         superBulletsTimer++;
+    }
+    if (speedTimer === 400) {
+        speedTimer = 1;
+        bonusSpeed = false;
+    } else {
+        speedTimer++;
     }
     //Update objs;
     player.update();
@@ -365,8 +389,8 @@ function tick() {
         //Cought;
         if (player.boundingBox.intersects(bonus.boundingBox)) {
             bonuses.remove(bonus);
-            rng = Math.floor(Math.random() * 3);
-            //rng = 2;
+            rng = Math.floor(Math.random() * 4);
+            //rng = 3;
             //Random bonuses;
             if (rng === 0) {
                 bonusActive = true;
@@ -380,6 +404,10 @@ function tick() {
             else if (rng === 2) {
                 bulletsActive = true;
                 superBulletsTimer = 1;
+            }
+            else if (rng === 3) {
+                bonusSpeed = true;
+                speedTimer = 1;
             }
             //console.log('catch');
         }

@@ -14,6 +14,7 @@
     cursor: pointer;
     color: $btn-clr;
     border-radius: 10px;
+    outline: 0;
 
     &:hover {
         background: linear-gradient(rgba(0,0,0,1),rgba(0,0,0,0));
@@ -23,6 +24,7 @@
 $btn-clr: whitesmoke;
 
 body {
+    //background: red;
     background: url(../Images/Backgrounds/planets.jpg);
     background-repeat: no-repeat;
     background-size: 100% auto;
@@ -74,122 +76,131 @@ body {
                 flex-flow: row wrap;
                 justify-content: center;
 
+                .bonusses {
+                    background: url('../Images/bonus.png') no-repeat;
+                    background-position: 36px 3px;
+                }
+
                 .info-wrapper {
                     background: rgba(0,0,0,0.5);
-                    border-radius: 2px;
-
-                    div {
-                        padding: 15px;
-
-                        &:first-of-type {
-                            font-size: 1.2rem;
-                            font-family: Sugar, sans-serif;
-                        }
-                    }
-                }
-
-                input {
-                    margin-left: 30px;
-                    @include buttonLayout();
-                }
-            }
-
-            #restart {
-                display: none;
-                flex-flow: column wrap;
-                justify-content: center;
-
-                .over-menu {
-                    color: $btn-clr;
                     font-family: Sugar, sans-serif;
-                    text-align: center;
-                    font-size: 2rem;
 
-                    div {
-                        margin: 10px;
-
-                        &:first-of-type {
-                            font-size: 3rem;
-                            font-weight: 900;
-                        }
+                    li {
+                        padding: 10px;
 
                         span {
-                            font-family: fantasy;
-                            margin-left: 10px;
-                            font-size: 1.5rem;
+                            font-family: Arial, sans-serif;
                         }
                     }
-                }
 
-                .btn-container {
-                    display: flex;
-                    flex-flow: column wrap;
-
-                    input {
-                        @include buttonLayout();
-                        margin: 0 auto;
-                        display: none;
+                    div {
+                        padding-top: 5px;
+                        font-size: 1.2rem;
                     }
                 }
             }
+
+            input {
+                margin-left: 30px;
+                @include buttonLayout();
+            }
         }
 
-        #canvas {
+        #restart {
             display: none;
-            border: 1px solid #000;
-            z-index: 0;
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 2px;
-        }
-
-        aside {
-            position: absolute;
-            margin-top: 535px;
-            //background: blue;
-            width: 100%;
-            flex-flow: row wrap;
+            flex-flow: column wrap;
             justify-content: center;
-            text-transform: uppercase;
-            color: #fff;
-            z-index: 1;
-            display: none;
 
-            .score-info {
-                margin-right: 20px;
+            .over-menu {
+                color: $btn-clr;
+                font-family: Sugar, sans-serif;
+                text-align: center;
+                font-size: 2rem;
+
+                div {
+                    margin: 10px;
+
+                    &:first-of-type {
+                        font-size: 3rem;
+                        font-weight: 900;
+                    }
+
+                    span {
+                        font-family: fantasy;
+                        margin-left: 10px;
+                        font-size: 1.5rem;
+                    }
+                }
+            }
+
+            .btn-container {
+                display: flex;
+                flex-flow: column wrap;
+
+                input {
+                    @include buttonLayout();
+                    margin: 0 auto;
+                    display: none;
+                }
             }
         }
     }
 
-    footer {
-        margin-top: 20px;
-        display: flex;
+    #canvas {
+        display: none;
+        border: 1px solid #000;
+        z-index: 0;
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 2px;
+    }
+
+    aside {
+        position: absolute;
+        margin-top: 535px;
+        //background: blue;
+        width: 100%;
         flex-flow: row wrap;
-        font-size: 1rem;
         justify-content: center;
-        position: relative;
-        //border: 1px solid green;
-        h2 {
-            padding-left: 20px;
-            position: absolute;
-            line-height: 120%;
+        text-transform: uppercase;
+        color: #fff;
+        z-index: 1;
+        display: none;
+
+        .score-info {
+            margin-right: 20px;
         }
+    }
+}
 
-        div {
-            //background: red;
-            width: 100%;
+footer {
+    margin-top: 20px;
+    display: flex;
+    flex-flow: row wrap;
+    font-size: 1rem;
+    justify-content: center;
+    position: relative;
+    //border: 1px solid green;
+    h2 {
+        padding-left: 20px;
+        position: absolute;
+        line-height: 120%;
+    }
 
-            input {
-                border: 1px solid $btn-clr;
-                border-radius: 4px;
-                background: rgba(0,0,0,0);
-                color: $btn-clr;
-                font-family: Sugar, sans-serif;
-                outline: 0;
-                cursor: pointer;
+    div {
+        //background: red;
+        width: 100%;
 
-                &:hover {
-                    background: rgba(0,0,0,0.9);
-                }
+        input {
+            border: 1px solid $btn-clr;
+            border-radius: 4px;
+            background: rgba(0,0,0,0);
+            color: $btn-clr;
+            font-family: Sugar, sans-serif;
+            outline: 0;
+            cursor: pointer;
+
+            &:hover {
+                background: rgba(0,0,0,0.9);
             }
         }
     }
