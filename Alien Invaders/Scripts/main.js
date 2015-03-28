@@ -7,8 +7,8 @@ var running = true,
     multiplierFire = 100,
     score = 0,
     gameMusic = document.getElementById('backgroundMusic'),
-    musicPlaying = false;
-//console.log(gameMusic);
+    musicPlaying = true;
+    gameMusic.play();
 
 //Player;
 var shipImg = new Image();
@@ -50,20 +50,17 @@ function start() {
     document.getElementById('playerHealth').innerHTML = player.hp;
     //Start game;
     update();
-    gameMusic.currentTime = 0;
-    gameMusic.play();
-    musicPlaying = true;
 }
 
 function mute() {
     if (musicPlaying) {
         gameMusic.pause();
         musicPlaying = false;
-        document.getElementById('mute-btn').value = 'Mute sound';
+        document.getElementById('mute-btn').value = 'Unmute sound';
     } else {
         gameMusic.play();
         musicPlaying = true;
-        document.getElementById('mute-btn').value = 'Unmute sound';
+        document.getElementById('mute-btn').value = 'Mute sound';
     }
 }
 
@@ -101,7 +98,6 @@ function newWave() {
             //Background;
             var rngImg = Math.floor((Math.random() * 4));
             document.getElementById('body').style.backgroundImage = 'url("Images/Backgrounds/background' + rngImg + '.jpg")';
-            //console.log(rngImg);
             waveReady = 1;
             //Enemies wave;
             rngImg = Math.floor((Math.random() * 4));
@@ -233,7 +229,6 @@ function tick() {
         bullet.update();
         //Remove bullets gone outside of the canvas;
         if (bullet.y > 560 || bullet.y < 0) {
-            //console.log("f");
             playerBullets.remove(bullet);
         }
         //Hit enemy;
@@ -289,8 +284,8 @@ function tick() {
                 console.log("Game Over");
                 running = false;
                 //Music;
-                gameMusic.pause();
-                gameMusic.currentTime = 0;
+                //gameMusic.pause();
+                //gameMusic.currentTime = 0;
                 //Styles;
                 document.getElementById('score-over').innerHTML = score;
                 document.getElementById('restart').style.display = 'block';
@@ -300,7 +295,7 @@ function tick() {
                     document.getElementById('info').style.display = 'none';
                     document.getElementById('btn-restart').style.display = 'flex';
                     document.getElementById('body').style.backgroundImage = 'url("Images/Backgrounds/planets.jpg")';
-                }, 1000);
+                }, 1500);
             } else {
                 shipImg.src = "Images/ship" + player.hp + ".png";
             }
