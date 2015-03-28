@@ -42,34 +42,43 @@ var input = new Input();
 listener(input);
 
 function start() {
+    //Styles;
+    document.getElementById('overlay').style.display = 'none';
+    document.getElementById('canvas').style.display = 'flex';
+    document.getElementById('info').style.display = 'flex';
+    document.getElementById('start').style.display = 'none';
+    document.getElementById('playerHealth').innerHTML = player.hp;
+    //Start game;
     update();
     gameMusic.currentTime = 0;
     gameMusic.play();
     musicPlaying = true;
-    document.getElementById('start').style.display = 'none';
 }
 
 function mute() {
     if (musicPlaying) {
         gameMusic.pause();
         musicPlaying = false;
+        document.getElementById('mute-btn').value = 'Mute sound';
     } else {
         gameMusic.play();
         musicPlaying = true;
+        document.getElementById('mute-btn').value = 'Unmute sound';
     }
 }
 
 function restart() {
     if (!running) {
         running = true;
+        //Stats;
         multiplierSpeed = 1;
         multiplierFire = 100;
         score = 0;
         document.getElementById('score').innerHTML = score;
+        document.getElementById('score-over').innerHTML = score;
+        //Objs;
         shipImg.src = "Images/ship5.png";
         player = new Ship(315, 500, shipImg, 3, 20);
-        document.getElementById('playerHealth').innerHTML = player.hp;
-        document.getElementById('restart').style.display = 'none';
         playerBullets = [];
         readyToShoot = 0;
         enemyBullets = [];
@@ -78,6 +87,10 @@ function restart() {
         waveSpeed = 0.2;
         enemies = [];
         start();
+        //Styles;
+        document.getElementById('playerHealth').innerHTML = player.hp;
+        document.getElementById('restart').style.display = 'none';
+        document.getElementById('btn-restart').style.display = 'none';
     }
 }
 
@@ -88,7 +101,7 @@ function newWave() {
             //Background;
             var rngImg = Math.floor((Math.random() * 4));
             document.getElementById('body').style.backgroundImage = 'url("Images/Backgrounds/background' + rngImg + '.jpg")';
-            console.log(rngImg);
+            //console.log(rngImg);
             waveReady = 1;
             //Enemies wave;
             rngImg = Math.floor((Math.random() * 4));
@@ -275,10 +288,19 @@ function tick() {
             if (player.hp === 0) {
                 console.log("Game Over");
                 running = false;
-                document.getElementById('restart').style.display = 'block';
-                document.getElementById('body').style.backgroundImage ='url("Images/Backgrounds/planets.jpg")';
+                //Music;
                 gameMusic.pause();
                 gameMusic.currentTime = 0;
+                //Styles;
+                document.getElementById('score-over').innerHTML = score;
+                document.getElementById('restart').style.display = 'block';
+                document.getElementById('overlay').style.display = 'flex';
+                setTimeout(function () {
+                    document.getElementById('canvas').style.display = 'none';
+                    document.getElementById('info').style.display = 'none';
+                    document.getElementById('btn-restart').style.display = 'flex';
+                    document.getElementById('body').style.backgroundImage = 'url("Images/Backgrounds/planets.jpg")';
+                }, 1000);
             } else {
                 shipImg.src = "Images/ship" + player.hp + ".png";
             }

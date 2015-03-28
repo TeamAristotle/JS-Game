@@ -16,7 +16,7 @@ Score - done
 Play button - done
 Restart button - done
 Mute button - done
-HTML layout (style, css ect)
+HTML layout (style, css ect) - done
 Armour?
 Rockets?
 Ammo?

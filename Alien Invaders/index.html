@@ -4,59 +4,58 @@
 <head>
     <title>Alien Invaders Game</title>
     <link type="text/css" href="Styles/style.css" rel="stylesheet" />
-    <style type="text/css" media="screen">
-        canvas,
-        img {
-            display: block;
-            margin: 1em auto;
-            border: 1px solid black;
-        }
-
-        #restart {
-            display: none;
-        }
-
-        body {
-            background-image: url(Images/Backgrounds/planets.jpg);
-            background-repeat: no-repeat;
-            background-size: 100% auto;
-            transition: 2s all;
-        }
-
-        #canvas {
-            background: rgba(0, 0, 0, 0.7);
-        }
-
-        .score {
-            position: relative;
-            right: 200px;
-            color: #fff;
-        }
-
-        .playerHealth {
-            position: relative;
-            right: 500px;
-            color: #fff;
-        }
-    </style>
 </head>
 
 <body id="body">
-<div class="wrapper">
-    <input type="button" value="Start" onclick="start()" id="start"/>
-    <input type="button" value="Restart" onclick="restart()" id="restart"/>
-    <input type="button" value="Mute/Unmute" onclick="mute()" />
-    <canvas id="canvas" width="700" height="550">Your browser doesn't support Canvas
-    </canvas>
-    <div class="playerHealth">
-        LIVES:
-        <span id="playerHealth">5</span>
+    <div class="wrapper">
+        <header>
+            <h1>Alien Invaders</h1>
+        </header>
+        <section class="container">
+            <div id="overlay">
+                <div id="start">
+                    <div class="info-wrapper">
+                        <div>Keys: </div>
+                        <div>Press 'a' to go left</div>
+                        <div>Press 'd' to go right</div>
+                        <div>Press 'w' to go up</div>
+                        <div>Press 's' to go down</div>
+                        <div>Press 'space' to go shoot</div>
+                    </div>
+                    <input type="button" value="Start playing" onclick=" start() " />
+                </div>
+                <div id="restart">
+                    <div class="over-menu">
+                        <div>Game over!</div>
+                        <div>Your score is:<span id="score-over">0</span></div>
+                    </div>
+                    <div class="btn-container">
+                        <input type="button" value="Play again?" onclick=" restart() " id="btn-restart" />
+                    </div>
+                </div>
+            </div>
+            <aside id="info">
+                <div class="playerHealth">
+                    lives:
+                    <span id="playerHealth">5</span>
+                </div>
+                <div class="score-info">
+                    score:
+                    <span id="score">0</span>
+                </div>
+            </aside>
+            <canvas id="canvas" width="700" height="550">
+                Your browser doesn't support Canvas
+            </canvas>
+
+        </section>
+        <footer>
+            <h2>Team Aristotle. Some Rights &copy;</h2>
+            <div>
+                <input type="button" value="Mute sound" onclick=" mute() " id="mute-btn"/>
+            </div>
+        </footer>
     </div>
-    <div class="score">
-        SCORE:
-        <span id="score">0</span>
-    </div>
-</div>
 
     <audio src="Sounds/Laser_Shoot4.wav" id="shoot"></audio>
     <audio src="Sounds/Explosion14.wav" id="enemyExplosion"></audio>
