@@ -19,7 +19,9 @@ shipImg.src = "Images/ship" + rng + ".png";
 var player = new Ship(315, 500, shipImg, 3, 20),
     bonuses = [],
     bonusActive = false,
-    fireBonusTimer = 1;
+    fireBonusTimer = 1,
+    bulletsActive = false,
+    superBulletsTimer = 1;
 
 //Enemies;
 var enemyImg = new Image();
@@ -163,6 +165,7 @@ function newWave() {
 
 function spawnBonus(x, y) {
     var rngJesus = Math.floor(Math.random() * 12);
+    //var rngJesus = 0;
     if (!rngJesus) {
         var bonus = new Bonus(x, y);
         bonuses.push(bonus);
@@ -178,6 +181,9 @@ function removeEnemy(enemy) {
     }
     //Bonus;
     spawnBonus(enemy.x, enemy.y);
+    //Increase score;
+    score += (1 * level);
+    document.getElementById('score').innerHTML = score;
 }
 
 
@@ -191,6 +197,9 @@ function render(ctx) {
     });
     playerBullets.forEach(function (bullet) {
         bullet.draw(ctx);
+        if (bulletsActive) {
+            bullet.boundingBox.draw(ctx);
+        }
         //bullet.boundingBox.draw(ctx);
     });
     enemyBullets.forEach(function (bullet) {
@@ -261,6 +270,12 @@ function tick() {
     } else {
         fireBonusTimer++;
     }
+    if (superBulletsTimer === 200) {
+        superBulletsTimer = 1;
+        bulletsActive = false;
+    } else {
+        superBulletsTimer++;
+    }
     //Update objs;
     player.update();
     enemies.forEach(function (enemy) {
@@ -285,18 +300,19 @@ function tick() {
         enemies.map(function (enemy) {
             if (enemy.boundingBox.intersects(bullet.boundingBox)) {
                 //console.log("hit");
-                if (enemy.hp === 0) {
+                if (bulletsActive) {
                     removeEnemy(enemy);
                 } else {
-                    enemy.removeHp();
                     if (enemy.hp === 0) {
                         removeEnemy(enemy);
+                    } else {
+                        enemy.removeHp();
+                        if (enemy.hp === 0) {
+                            removeEnemy(enemy);
+                        }
                     }
+                    playerBullets.remove(bullet);
                 }
-                playerBullets.remove(bullet);
-                //increase score;
-                score += (1 * level);
-                document.getElementById('score').innerHTML = score;
             }
         });
         //Hit enemy bullet;
@@ -349,7 +365,8 @@ function tick() {
         //Cought;
         if (player.boundingBox.intersects(bonus.boundingBox)) {
             bonuses.remove(bonus);
-            rng = Math.floor(Math.random() * 2);
+            rng = Math.floor(Math.random() * 3);
+            //rng = 2;
             //Random bonuses;
             if (rng === 0) {
                 bonusActive = true;
@@ -359,6 +376,10 @@ function tick() {
                 player.hp++;
                 //Update hp;
                 document.getElementById('playerHealth').innerHTML = player.hp;
+            }
+            else if (rng === 2) {
+                bulletsActive = true;
+                superBulletsTimer = 1;
             }
             //console.log('catch');
         }
