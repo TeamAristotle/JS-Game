@@ -112,12 +112,18 @@ function restart() {
         document.getElementById('restart').style.display = 'none';
         document.getElementById('btn-restart').style.display = 'none';
         document.getElementById('level').innerHTML = level;
+        //Clear bonuses; 
+        bonusActive = false;
+        bonusSpeed = false;
+        freezeActive = false;
+        bulletsActive = false;
+
     }
 }
 
 //Generate new waves;
 function newWave() {
-    if (enemies.length === 0 && bombs.length === 0  ) {
+    if (enemies.length === 0 && bombs.length === 0) {
         //Clear canvas of bullets;
         enemyBullets = [];
         playerBullets = [];
@@ -409,7 +415,7 @@ function tick() {
             }
         });
         //Hit bomb;
-        bombs.map(function(bomb) {
+        bombs.map(function (bomb) {
             if (bomb.boundingBox.intersects(bullet.boundingBox)) {
                 if (bomb.hp === 0) {
                     bombs.remove(bomb);
