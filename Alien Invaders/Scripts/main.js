@@ -26,11 +26,14 @@ var player = new Ship(315, 500, shipImg, 3, playerSpeed),
     bulletsActive = false,
     superBulletsTimer = 1,
     bonusSpeed = false,
-    speedTimer = 1;
+    speedTimer = 1,
+    freezeActive = false,
+    freezeTimer = 1;
 
 //Enemies;
 var enemyImg = new Image();
 var waveSpeed = 0.2,
+    defWaveSpeed = 0.2,
     waveY = 20,
     waveX = 100,
     rowPos = 1,
@@ -39,7 +42,7 @@ var waveSpeed = 0.2,
     waveReady = 1,
     enemies = [];
 
-//Bullets;
+//Bullets and Bombs;
 var greenBullet = new Image();
 greenBullet.src = "Images/bullet.png";
 var redBullets = new Image();
@@ -49,7 +52,8 @@ var playerBullets = [],
     enemyBullets = [],
     playerBulletSpeed = 1,
     defBulletSpeed = 1,
-    enemyBulletSpeed = 1;
+    enemyBulletSpeed = 1,
+    bombs = [];
 
 //Input;
 var input = new Input();
@@ -101,6 +105,7 @@ function restart() {
         waveSpeed = 0.2;
         enemies = [];
         bonuses = [];
+        bombs = [];
         start();
         //Styles;
         document.getElementById('playerHealth').innerHTML = player.hp;
@@ -112,7 +117,7 @@ function restart() {
 
 //Generate new waves;
 function newWave() {
-    if (enemies.length === 0) {
+    if (enemies.length === 0 && bombs.length === 0  ) {
         //Clear canvas of bullets;
         enemyBullets = [];
         playerBullets = [];
@@ -175,12 +180,22 @@ function newWave() {
 }
 
 function spawnBonus(x, y) {
-    var rngJesus = Math.floor(Math.random() * 12);
+    var rngJesus = Math.floor(Math.random() * 10);
     //var rngJesus = 0;
     if (!rngJesus) {
         var bonus = new Bonus(x, y);
         bonuses.push(bonus);
         //console.log(bonus);
+    }
+}
+
+function spawnBomb(x, y) {
+    var rngJesus = Math.floor(Math.random() * 40);
+    //var rngJesus = 0;
+    if (!rngJesus) {
+        var bomb = new Bomb(x, y, 0.25);
+        bombs.push(bomb);
+        //console.log(bomb);
     }
 }
 
@@ -192,14 +207,46 @@ function removeEnemy(enemy) {
     }
     //Bonus;
     spawnBonus(enemy.x, enemy.y);
+    //Bomb;
+    spawnBomb(enemy.x, enemy.y);
     //Increase score;
     score += (1 * level);
     document.getElementById('score').innerHTML = score;
 }
 
+function delayRestartBtn() {
+    setTimeout(function () {
+        document.getElementById('canvas').style.display = 'none';
+        document.getElementById('info').style.display = 'none';
+        document.getElementById('btn-restart').style.display = 'flex';
+    }, 1500);
+}
+
+function gameOver(boomed) {
+    console.log("Game Over");
+    running = false;
+    //Music;
+    //gameMusic.pause();
+    //gameMusic.currentTime = 0;
+    //Styles;
+    document.getElementById('score-over').innerHTML = score;
+    document.getElementById('restart').style.display = 'block';
+    document.getElementById('overlay').style.display = 'flex';
+    if (boomed) {
+        document.getElementById('body').style.backgroundImage = 'url("Images/Backgrounds/boom.jpg")';
+        delayRestartBtn();
+    } else {
+        document.getElementById('body').style.backgroundImage = 'url("Images/Backgrounds/planets.jpg")';
+        delayRestartBtn();
+    }
+
+}
 
 function render(ctx) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    bombs.forEach(function (bomb) {
+        bomb.draw(ctx);
+    });
     player.draw(ctx);
     //player.boundingBox.draw(ctx);
     enemies.forEach(function (enemy) {
@@ -300,17 +347,32 @@ function tick() {
     } else {
         speedTimer++;
     }
+    //console.log(freezeTimer);
+    if (freezeTimer === 240) {
+        freezeTimer = 1;
+        freezeActive = false;
+    } else {
+        freezeTimer++;
+    }
     //Update objs;
     player.update();
     enemies.forEach(function (enemy) {
         enemy.update();
         //Enemy fire;
         var fire = Math.floor((Math.random() * enemy.fireRate));
+        if (freezeActive) {
+            fire = 1;
+        }
         //console.log(fire);
         if (fire === 0) {
             //console.log("fire");
             var bullet = new Bullet(enemy.x + 18, enemy.y + 12, redBullets, enemyBulletSpeed, false);
             enemyBullets.push(bullet);
+        }
+        if (freezeActive) {
+            enemy.speed = 0;
+        } else {
+            enemy.speed = defWaveSpeed * multiplierSpeed;
         }
     });
     //Player bullets;
@@ -346,6 +408,17 @@ function tick() {
                 enemyBullets.remove(enemyBullet);
             }
         });
+        //Hit bomb;
+        bombs.map(function(bomb) {
+            if (bomb.boundingBox.intersects(bullet.boundingBox)) {
+                if (bomb.hp === 0) {
+                    bombs.remove(bomb);
+                } else {
+                    bomb.hp--;
+                }
+                playerBullets.remove(bullet);
+            }
+        });
     });
     //Enemy bullets;
     enemyBullets.map(function (bullet) {
@@ -366,21 +439,7 @@ function tick() {
             document.getElementById('playerHealth').innerHTML = player.hp;
             //Remove HP and stop game;
             if (player.hp === 0) {
-                console.log("Game Over");
-                running = false;
-                //Music;
-                //gameMusic.pause();
-                //gameMusic.currentTime = 0;
-                //Styles;
-                document.getElementById('score-over').innerHTML = score;
-                document.getElementById('restart').style.display = 'block';
-                document.getElementById('overlay').style.display = 'flex';
-                setTimeout(function () {
-                    document.getElementById('canvas').style.display = 'none';
-                    document.getElementById('info').style.display = 'none';
-                    document.getElementById('btn-restart').style.display = 'flex';
-                    document.getElementById('body').style.backgroundImage = 'url("Images/Backgrounds/planets.jpg")';
-                }, 1500);
+                gameOver();
             }
         }
     });
@@ -390,7 +449,7 @@ function tick() {
         if (player.boundingBox.intersects(bonus.boundingBox)) {
             bonuses.remove(bonus);
             rng = Math.floor(Math.random() * 4);
-            //rng = 3;
+            //rng = 4;
             //Random bonuses;
             if (rng === 0) {
                 bonusActive = true;
@@ -409,11 +468,25 @@ function tick() {
                 bonusSpeed = true;
                 speedTimer = 1;
             }
+            else if (rng === 4) {
+                freezeActive = true;
+                freezeTimer = 1;
+            }
             //console.log('catch');
         }
         //Going out of the canvas;
         if (bonus.y > 560) {
             bonuses.remove(bonus);
+        }
+    });
+    bombs.map(function (bomb) {
+        bomb.update();
+        if (bomb.y > 510) {
+            gameOver(true);
+            //console.log("boom");
+        }
+        if (player.boundingBox.intersects(bomb.boundingBox)) {
+            gameOver(true);
         }
     });
 }

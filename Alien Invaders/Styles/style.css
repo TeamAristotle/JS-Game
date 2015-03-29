@@ -43,19 +43,27 @@ body {
         justify-content: center; }
         .wrapper .container #overlay #start .bonusses {
           background: url('../Images/bonus.png') no-repeat;
-          background-position: 36px 3px; }
+          background-position: 40px 10px; }
+        .wrapper .container #overlay #start .bombs {
+          background: url('../Images/bomb.png') no-repeat;
+          background-size: 12%;
+          background-position: 40px 10px; }
         .wrapper .container #overlay #start .info-wrapper {
           background: rgba(0, 0, 0, 0.5);
-          font-family: Sugar, sans-serif; }
+          font-family: Sugar, sans-serif;
+          width: 200px;
+          box-sizing: border-box;
+          padding: 10px 0; }
+          .wrapper .container #overlay #start .info-wrapper .bomb-info {
+            line-height: 200%; }
           .wrapper .container #overlay #start .info-wrapper li {
             padding: 10px; }
             .wrapper .container #overlay #start .info-wrapper li span {
               font-family: Arial, sans-serif; }
           .wrapper .container #overlay #start .info-wrapper div {
-            padding-top: 5px;
+            padding-top: 12px;
             font-size: 1.2rem; }
       .wrapper .container #overlay input {
-        margin-left: 30px;
         height: 80px;
         font-size: 2rem;
         font-family: Sugar, sans-serif;
@@ -144,3 +152,5 @@ footer {
       cursor: pointer; }
       footer div input:hover {
         background: rgba(0, 0, 0, 0.9); }
+
+/*# sourceMappingURL=style.css.map */

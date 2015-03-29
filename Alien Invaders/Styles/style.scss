@@ -78,12 +78,25 @@ body {
 
                 .bonusses {
                     background: url('../Images/bonus.png') no-repeat;
-                    background-position: 36px 3px;
+                    background-position: 40px 10px;
+                }
+
+                .bombs {
+                    background: url('../Images/bomb.png') no-repeat;
+                    background-size: 12%;
+                    background-position: 40px 10px;
                 }
 
                 .info-wrapper {
                     background: rgba(0,0,0,0.5);
                     font-family: Sugar, sans-serif;
+                    width: 200px;
+                    box-sizing: border-box;
+                    padding: 10px 0;
+
+                    .bomb-info {
+                        line-height: 200%;
+                    }
 
                     li {
                         padding: 10px;
@@ -94,14 +107,13 @@ body {
                     }
 
                     div {
-                        padding-top: 5px;
+                        padding-top: 12px;
                         font-size: 1.2rem;
                     }
                 }
             }
 
             input {
-                margin-left: 30px;
                 @include buttonLayout();
             }
         }

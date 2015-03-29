@@ -31,9 +31,16 @@
                             <li>Super fire speed</li>
                             <li>Armor piercing bullets</li>
                             <li>Second cannon</li>
+                            <li>Freeze enemies</li>
                         </ul>
                     </div>
-                    <input type="button" value="Start playing" onclick=" start() " />
+                    <div class="info-wrapper">
+                        <input type="button" value="Start playing" onclick=" start() " />
+                        <div class="bombs">Bombs: </div>
+                        <ul>
+                            <li class="bomb-info">Kill the bomb at any cost. If the bomb gets to the ground you will die!</li>
+                        </ul>
+                    </div>
                 </div>
                 <div id="restart">
                     <div class="over-menu">
@@ -59,7 +66,8 @@
                     <span id="score">0</span>
                 </div>
             </aside>
-            <canvas id="canvas" width="700" height="550">Your browser doesn't support Canvas
+            <canvas id="canvas" width="700" height="550">
+                Your browser doesn't support Canvas
             </canvas>
 
         </section>
@@ -77,6 +85,7 @@
     <audio src="Sounds/backgroundBeat.mp3" id="backgroundMusic" loop></audio>
 
     <script src="Scripts/logic.js"></script>
+    <script src="Scripts/bomb.js"></script>
     <script src="Scripts/bonus.js"></script>
     <script src="Scripts/bullet.js"></script>
     <script src="Scripts/ship.js"></script>
