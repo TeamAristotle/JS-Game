@@ -25,7 +25,7 @@
         if (this.moveLeft) {
             this.x -= this.speed;
             this.boundingBox.x -= this.speed;
-            //console.log("this.x");
+            //console.log(this.x);
         }
         if (this.moveUp) {
             this.y += this.speed;
@@ -35,7 +35,7 @@
             this.y -= this.speed;
             this.boundingBox.y -= this.speed;
         }
-        //Check if going outside the canvas;
+        //Check if going outside the allowed zone;
         if (this.x < 5) {
             this.x = 5;
             this.boundingBox.x = 5;

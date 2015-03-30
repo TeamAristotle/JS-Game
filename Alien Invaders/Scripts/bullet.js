@@ -17,7 +17,6 @@
         } else { //Going down;
             this.y += this.speed;
             this.boundingBox.y += this.speed;
-            //console.log("t");
         }
     };
 

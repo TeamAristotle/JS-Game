@@ -4,7 +4,7 @@ var ctx = c.getContext("2d");
 //Game is running;
 var running = true,
     multiplierSpeed = 1,
-    multiplierFire = 100,
+    multiplierFire = 15,
     score = 0,
     gameMusic = document.getElementById('backgroundMusic'),
     musicPlaying = true,
@@ -17,9 +17,8 @@ var shipImg = new Image();
 var rng = Math.floor(Math.random() * 3 + 1);
 shipImg.src = "Images/ship" + rng + ".png";
 var playerSpeed = 20,
-    defPlayerSpeed = 20;
-
-var player = new Ship(315, 500, shipImg, 3, playerSpeed),
+    defPlayerSpeed = 20,
+    player = new Ship(315, 500, shipImg, 3, playerSpeed),
     bonuses = [],
     bonusActive = false,
     fireBonusTimer = 1,
@@ -31,8 +30,8 @@ var player = new Ship(315, 500, shipImg, 3, playerSpeed),
     freezeTimer = 1;
 
 //Enemies;
-var enemyImg = new Image();
-var waveSpeed = 0.2,
+var enemyImg = new Image(),
+    waveSpeed = 0.2,
     defWaveSpeed = 0.2,
     waveY = 20,
     waveX = 100,
@@ -71,6 +70,44 @@ function start() {
     update();
 }
 
+function restart() {
+    if (!running) {
+        running = true;
+        //Stats;
+        multiplierSpeed = 1;
+        multiplierFire = 15;
+        score = 0;
+        level = 0;
+        hp = 1;
+        waveReady = 1;
+        waveSpeed = 0.2;
+        readyToShoot = 0;
+        document.getElementById('score').innerHTML = score;
+        document.getElementById('score-over').innerHTML = score;
+        //Objs;
+        rng = Math.floor(Math.random() * 3 + 1);
+        shipImg.src = "Images/ship" + rng + ".png";
+        player = new Ship(315, 500, shipImg, 3, 20);
+        playerBullets = [];
+        enemyBullets = [];
+        enemies = [];
+        bonuses = [];
+        bombs = [];
+        //Styles;
+        document.getElementById('playerHealth').innerHTML = player.hp;
+        document.getElementById('restart').style.display = 'none';
+        document.getElementById('btn-restart').style.display = 'none';
+        document.getElementById('level').innerHTML = level;
+        //Clear bonuses; 
+        bonusActive = false;
+        bonusSpeed = false;
+        freezeActive = false;
+        bulletsActive = false;
+        //Start the game;
+        start();
+    }
+}
+
 function mute() {
     if (musicPlaying) {
         gameMusic.pause();
@@ -83,59 +120,21 @@ function mute() {
     }
 }
 
-function restart() {
-    if (!running) {
-        running = true;
-        //Stats;
-        multiplierSpeed = 1;
-        multiplierFire = 100;
-        score = 0;
-        level = 0;
-        document.getElementById('score').innerHTML = score;
-        document.getElementById('score-over').innerHTML = score;
-        //Objs;
-        rng = Math.floor(Math.random() * 3 + 1);
-        shipImg.src = "Images/ship" + rng + ".png";
-        player = new Ship(315, 500, shipImg, 3, 20);
-        playerBullets = [];
-        readyToShoot = 0;
-        enemyBullets = [];
-        hp = 1;
-        waveReady = 1;
-        waveSpeed = 0.2;
-        enemies = [];
-        bonuses = [];
-        bombs = [];
-        start();
-        //Styles;
-        document.getElementById('playerHealth').innerHTML = player.hp;
-        document.getElementById('restart').style.display = 'none';
-        document.getElementById('btn-restart').style.display = 'none';
-        document.getElementById('level').innerHTML = level;
-        //Clear bonuses; 
-        bonusActive = false;
-        bonusSpeed = false;
-        freezeActive = false;
-        bulletsActive = false;
-
-    }
-}
-
 //Generate new waves;
 function newWave() {
+    //Check if the field is clear;
     if (enemies.length === 0 && bombs.length === 0) {
         //Clear canvas of bullets;
         enemyBullets = [];
         playerBullets = [];
         //Delay spawn;
-        if (waveReady % 100 === 0) {
+        if (waveReady % 120 === 0) {
             //Stats;
             level++;
             document.getElementById('level').innerHTML = level;
             //Background;
             rng = Math.floor((Math.random() * 4));
             document.getElementById('body').style.backgroundImage = 'url("Images/Backgrounds/background' + rng + '.jpg")';
-            waveReady = 1;
             //Enemies wave;
             rng = Math.floor((Math.random() * 4));
             enemyImg.src = "Images/enemy" + rng + ".png";
@@ -174,8 +173,11 @@ function newWave() {
                 new Enemy(waveX, 7, waveY + 150, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp),
                 new Enemy(waveX, 8, waveY + 150, enemyImg, waveSpeed * multiplierSpeed, fireRate - multiplierFire, hp)
             ];
+            //Wave timer reset;
+            waveReady = 1;
+            //Buff enemies;
             multiplierSpeed += 0.5;
-            multiplierFire += 100;
+            multiplierFire += 15;
             hp++;
             if (multiplierFire >= 300) {
                 multiplierFire = 300;
@@ -225,7 +227,7 @@ function delayRestartBtn() {
         document.getElementById('canvas').style.display = 'none';
         document.getElementById('info').style.display = 'none';
         document.getElementById('btn-restart').style.display = 'flex';
-    }, 1500);
+    }, 2000);
 }
 
 function gameOver(boomed) {
@@ -249,7 +251,9 @@ function gameOver(boomed) {
 }
 
 function render(ctx) {
+    //Clear;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    //Redraw;
     bombs.forEach(function (bomb) {
         bomb.draw(ctx);
     });
@@ -368,17 +372,15 @@ function tick() {
         var fire = Math.floor((Math.random() * enemy.fireRate));
         if (freezeActive) {
             fire = 1;
+            enemy.speed = 0;
+        } else {
+            enemy.speed = defWaveSpeed * multiplierSpeed;
         }
         //console.log(fire);
         if (fire === 0) {
             //console.log("fire");
             var bullet = new Bullet(enemy.x + 18, enemy.y + 12, redBullets, enemyBulletSpeed, false);
             enemyBullets.push(bullet);
-        }
-        if (freezeActive) {
-            enemy.speed = 0;
-        } else {
-            enemy.speed = defWaveSpeed * multiplierSpeed;
         }
     });
     //Player bullets;
@@ -420,7 +422,7 @@ function tick() {
                 if (bomb.hp === 0) {
                     bombs.remove(bomb);
                 } else {
-                    bomb.hp--;
+                    bomb.removeHp();
                 }
                 playerBullets.remove(bullet);
             }
@@ -451,7 +453,7 @@ function tick() {
     });
     bonuses.map(function (bonus) {
         bonus.update();
-        //Cought;
+        //Caught;
         if (player.boundingBox.intersects(bonus.boundingBox)) {
             bonuses.remove(bonus);
             rng = Math.floor(Math.random() * 4);
@@ -478,7 +480,7 @@ function tick() {
                 freezeActive = true;
                 freezeTimer = 1;
             }
-            //console.log('catch');
+            //console.log('caught');
         }
         //Going out of the canvas;
         if (bonus.y > 560) {
@@ -487,6 +489,7 @@ function tick() {
     });
     bombs.map(function (bomb) {
         bomb.update();
+        //Going out of the canvas;
         if (bomb.y > 510) {
             gameOver(true);
             //console.log("boom");

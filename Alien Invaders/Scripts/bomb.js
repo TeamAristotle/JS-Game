@@ -1,4 +1,4 @@
-﻿var Bomb = (function() {
+﻿var Bomb = (function () {
     function Bomb(x, y, speed) {
         this.x = x;
         this.y = y;
@@ -10,6 +10,10 @@
         this.speed = speed;
         this.boundingBox = new Rectangle(x, y, this.width, this.height);
     }
+
+    Bomb.prototype.removeHp = function () {
+        this.hp--;
+    };
 
     Bomb.prototype.update = function () {
         this.y += this.speed;

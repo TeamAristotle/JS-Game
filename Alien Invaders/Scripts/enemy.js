@@ -1,4 +1,4 @@
-﻿//Global var so the entire row can move together;
+﻿//Entire row can move together;
 var goRight = false,
     goDown = true;
 
@@ -35,7 +35,7 @@ var Enemy = (function () {
             this.boundingBox.y = 20;
             goDown = true;
         }
-        //Move left to right;
+        //Moving left and right;
         if (goRight) {
             this.x += this.speed / 2;
             this.boundingBox.x += this.speed / 2;
