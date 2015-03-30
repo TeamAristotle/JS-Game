@@ -456,7 +456,7 @@ function tick() {
         //Caught;
         if (player.boundingBox.intersects(bonus.boundingBox)) {
             bonuses.remove(bonus);
-            rng = Math.floor(Math.random() * 4);
+            rng = Math.floor(Math.random() * 5);
             //rng = 4;
             //Random bonuses;
             if (rng === 0) {
