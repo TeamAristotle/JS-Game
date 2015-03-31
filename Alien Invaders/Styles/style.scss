@@ -1,4 +1,4 @@
-﻿@import "reset.css";
+@import "reset.css";
 
 @font-face {
     font-family: 'Sugar';
@@ -103,12 +103,12 @@ body {
 
                         span {
                             font-family: Arial, sans-serif;
-                        }
                     }
 
                     div {
                         padding-top: 12px;
                         font-size: 1.2rem;
+                            color: #226060;
                     }
                 }
             }
