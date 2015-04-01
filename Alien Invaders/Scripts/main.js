@@ -69,6 +69,12 @@ function start() {
     //Start game;
     update();
 }
+function resume() {
+    if (!running) {
+        running = true;
+        start();
+    }
+}
 
 function restart() {
     if (!running) {
@@ -98,7 +104,7 @@ function restart() {
         document.getElementById('restart').style.display = 'none';
         document.getElementById('btn-restart').style.display = 'none';
         document.getElementById('level').innerHTML = level;
-        //Clear bonuses; 
+        //Clear bonuses;
         bonusActive = false;
         bonusSpeed = false;
         freezeActive = false;
@@ -221,13 +227,23 @@ function removeEnemy(enemy) {
     score += (1 * level);
     document.getElementById('score').innerHTML = score;
 }
-
 function delayRestartBtn() {
     setTimeout(function () {
         document.getElementById('canvas').style.display = 'none';
         document.getElementById('info').style.display = 'none';
         document.getElementById('btn-restart').style.display = 'flex';
     }, 2000);
+}
+function gamePause() {
+    console.log("The game is paused");
+    running = false;
+    //Music;
+    //gameMusic.pause();
+    //gameMusic.currentTime = 0;
+    //Styles;
+    document.getElementById('pause').style.display = 'block';
+    document.getElementById('overlay').style.display = 'flex';
+    document.getElementById('btn-resume').style.display = 'flex';
 }
 
 function gameOver(boomed) {
@@ -308,6 +324,9 @@ function tick() {
 
     } else {
         player.moveDown = false;
+    }
+    if(input.p){
+        gamePause();
     }
     //Fire;
     if (input.space) {

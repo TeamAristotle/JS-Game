@@ -165,6 +165,58 @@ body {
 .wrapper .container #restart .btn-container input:hover {
     background: linear-gradient(#000000, rgba(0, 0, 0, 0));
 }
+.wrapper .container #pause {
+    display: none;
+    flex-flow: column wrap;
+    justify-content: center;
+}
+
+.wrapper .container #pause .over-menu {
+    color: whitesmoke;
+    font-family: Sugar, sans-serif;
+    text-align: center;
+    font-size: 2rem;
+}
+
+.wrapper .container #pause .over-menu div {
+    margin: 10px;
+}
+
+.wrapper .container #pause .over-menu div:first-of-type {
+    font-size: 3rem;
+    font-weight: 900;
+    color: #ec7ef5;
+}
+
+.wrapper .container #pause .over-menu div span {
+    font-family: fantasy;
+    margin-left: 10px;
+    font-size: 1.5rem;
+    color: #ec7ef5;
+}
+
+.wrapper .container #pause .btn-container {
+    display: flex;
+    flex-flow: column wrap;
+}
+
+.wrapper .container #pause .btn-container input {
+    height: 80px;
+    font-size: 2rem;
+    font-family: Sugar, sans-serif;
+    border: 1px solid whitesmoke;
+    background: linear-gradient(rgba(0, 0, 0, 0), #000000);
+    cursor: pointer;
+    color: #ec7ef5;
+    border-radius: 10px;
+    outline: 0;
+    margin: 0 auto;
+    display: none;
+}
+
+.wrapper .container #pause .btn-container input:hover {
+    background: linear-gradient(#000000, rgba(0, 0, 0, 0));
+}
 
 .wrapper #canvas {
     display: none;

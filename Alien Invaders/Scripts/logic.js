@@ -7,6 +7,7 @@ var Input = (function () {
         this.d = false;
         this.w = false;
         this.space = false;
+        this.p = false;
     }
 
     return Input;
@@ -37,6 +38,9 @@ function listener(input) {
             case 87:
                 input.w = true;
                 break;
+            case 80:
+                input.p = true;
+                break;
         }
     };
 
@@ -62,6 +66,8 @@ function listener(input) {
             case 87:
                 input.w = false;
                 break;
+            case 80:
+                input.p = false;
         }
     };
 }

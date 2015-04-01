@@ -22,6 +22,7 @@
                             <li>Press <span>'W'</span> to go up</li>
                             <li>Press <span>'S'</span> to go down</li>
                             <li>Press <span>'SPACE'</span> to go shoot</li>
+                            <li>Press <span>'P'</span> to pause the game</li>
                         </ul>
                     </div>
                     <div class="info-wrapper">
@@ -51,6 +52,14 @@
                         <input type="button" value="Play again?" onclick=" restart() " id="btn-restart" />
                     </div>
                 </div>
+                <div id ="pause">
+                	<div class="over-menu">
+                		<div>The game is paused!</div>
+                	</div>
+                	<div class ="btn-container">
+                		<input type="button" value="Resume" onclick=" resume() " id ="btn-resume" />
+                	</div>
+                </div>		
             </div>
             <aside id="info">
                 <div class="score-info">
